@@ -1,7 +1,8 @@
 import customtkinter as ctk 
 import tkinter as tk
 from tkinter import ttk, messagebox
-class Login(tk.Tk):
+ctk.set_appearance_mode("Dark")
+class sign_in(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("identification")
@@ -18,7 +19,7 @@ class Login(tk.Tk):
         self.grid_columnconfigure(1, weight=1)
         self.title_label = tk.Label(self,
                                font=("Britannic Bold",35),
-                               text="Login Page",
+                               text="sign in Page",
                                fg="blue")
         self.title_label.grid(row=0, column=0, columnspan=2, pady=30)
         self.mail_label= tk.Label(self,
@@ -42,15 +43,14 @@ class Login(tk.Tk):
                                       width=30,
                                       show="*")
         self.password_entry.grid(row=2, column=1, padx=10, pady=10, sticky="w")
-        ctk.set_appearance_mode("light")
         btn3 = ctk.CTkButton(
             self,
-            text="login",
+            text="sign in",
             font=("Arial", 22),
             corner_radius=10,
             width=200,
             height=45,
-            command=lambda: print("login clicked"))
+            command=lambda: print("sign in clicked"))
         btn3.grid(row=3, column=0, columnspan=2, pady=10)
         link_frame = tk.Frame(self)
         link_frame.grid(row=4, column=0, columnspan=2)
@@ -66,5 +66,5 @@ class Login(tk.Tk):
                          cursor="hand2")
         label.grid(row=4, column=1, padx=5, sticky="w")
         label.bind("<Button-1>", lambda e: print("Text clicked!"))
-app = Login()
+app = sign_in()
 app.mainloop()
