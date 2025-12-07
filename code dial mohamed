@@ -1,0 +1,122 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Couleurs
+MODULE_COLOR = "#1B5886"          
+BUTTON_SELECTED_COLOR = "#8DBAE4" 
+BG_COLOR = "#f0f0f0"    
+TEXT_COLOR = "#FFFFFF"            
+
+
+class ma_fenetre(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title(" sélectionner xi7aja")
+        self.geometry("800x600")  # bax nzid on9es f taille 
+        self.configure(bg=BG_COLOR)
+
+        
+        self.filiere_var = None
+        self.filiere_buttons = {}
+        self.annee_var = tk.StringVar(value="")
+        self.semestre_var = tk.StringVar(value="")
+
+        self.create_widgets()
+
+    def create_widgets(self):
+        # l3onwan  filière
+        tk.Label(self, text="Choisissez votre filière :", bg=BG_COLOR,
+                 font=("Arial", 12, "bold")).pack(pady=8)
+
+
+        filieres = ["SEECS", "GIL", "RSSP","GCDSTE","GI"]
+        filieres_frame = tk.Frame(self, bg=BG_COLOR)
+        filieres_frame.pack(pady=5)
+
+        for f in filieres:
+            btn = tk.Button(
+                filieres_frame,
+                text=f,
+                bg=MODULE_COLOR,
+                fg=TEXT_COLOR,
+                font=("Arial", 10, "bold"),
+                relief=tk.RAISED,
+                width=25,
+                cursor="hand2",
+                command=lambda fil=f: self.khtar_filiere(fil)
+            )
+            btn.pack(pady=4)
+            self.filiere_buttons[f] = btn
+
+        
+        tk.Label(self, text="Choisissez votre année :", bg=BG_COLOR,
+                 font=("Arial", 12, "bold")).pack(pady=(20, 5))
+
+        #annee
+        annees_frame = tk.Frame(self, bg=BG_COLOR)
+        annees_frame.pack(pady=5)
+        annees = ["1ère Année", "2ème Année", "3ème Année"]
+        for a in annees:
+            rb = tk.Radiobutton(annees_frame, text=a, value=a, variable=self.annee_var,
+                                bg=BG_COLOR, font=("Arial", 10))
+            rb.pack(anchor='center', pady=2)  # centrer horizontalement et espacement vertical
+
+        #semestre
+        tk.Label(self, text="Choisissez votre semestre :", bg=BG_COLOR,
+                 font=("Arial", 12, "bold")).pack(pady=(20, 5))
+
+        
+        semestres_frame = tk.Frame(self, bg=BG_COLOR)
+        semestres_frame.pack(pady=(0, 15))
+
+        s1 = tk.Radiobutton(semestres_frame, text="Semestre 1", value="Semestre 1",
+                            variable=self.semestre_var, bg=BG_COLOR, font=("Arial", 10))
+        s2 = tk.Radiobutton(semestres_frame, text="Semestre 2", value="Semestre 2",
+                            variable=self.semestre_var, bg=BG_COLOR, font=("Arial", 10))
+        s1.grid(row=0, column=0, padx=20)
+        s2.grid(row=0, column=1, padx=20)
+
+        
+        btn_continue = tk.Button(self, text="Continuer", bg=MODULE_COLOR, fg=TEXT_COLOR,
+                                 font=("Arial", 12, "bold"),
+                                 command=self.valide_selection)
+        btn_continue.pack(pady=10, ipadx=20, ipady=6)
+
+    def khtar_filiere(self, filiere):
+        self.filiere_var = filiere
+        # ????????????? 
+        for fil, btn in self.filiere_buttons.items():
+            if fil == filiere:
+                btn.config(bg=BUTTON_SELECTED_COLOR, relief=tk.SUNKEN)
+            else:
+                btn.config(bg=MODULE_COLOR, relief=tk.RAISED)
+        #?????????????
+    def valide_selection(self):
+        filiere = self.filiere_var
+        annee = self.annee_var.get()
+        semestre = self.semestre_var.get()
+
+        if not filiere or not annee or not semestre:
+            messagebox.showerror("Erreur", "Veuillez sélectionner la filière, l'année et le semestre.")
+            return
+
+        self.fenetre_taniya(filiere, annee, semestre)
+
+    def fenetre_taniya(self, filiere, annee, semestre):
+        new_win = tk.Toplevel(self)
+        new_win.title("Module ouvert")
+        new_win.geometry("350x150")
+        new_win.configure(bg=BG_COLOR)
+
+        msg = f"Filière: {filiere}\nAnnée: {annee}\nSemestre: {semestre}"
+        label = tk.Label(new_win, text=msg, bg=BG_COLOR, font=("Arial", 12))
+        label.pack(expand=True, pady=30)
+
+        btn_close = tk.Button(new_win, text="Fermer", command=new_win.destroy)
+        btn_close.pack(pady=10)
+
+
+if __name__ == "__main__":
+    app = ma_fenetre()
+    app.mainloop()
+
