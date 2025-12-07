@@ -152,6 +152,9 @@ class sign_in(tk.Tk):
             height=45,
             command=self.check_if_full)
         btn3.grid(row=12, column=0, columnspan=2, pady=5)
-       
-app = sign_in()
-app.mainloop()
+def open_sign_in():
+    app = sign_in()
+    app.mainloop()
+if __name__ == "__main__":
+    app = sign_in()
+    app.mainloop()

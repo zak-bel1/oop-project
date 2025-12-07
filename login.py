@@ -1,10 +1,11 @@
 import customtkinter as ctk 
 import tkinter as tk
 from tkinter import ttk, messagebox
+from sign_in import open_sign_in
 
 
 
-class sign_in(tk.Tk):
+class log_in(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("identification")
@@ -80,6 +81,10 @@ class sign_in(tk.Tk):
                          font=("Arial", 15),
                          cursor="hand2")
         label.grid(row=4, column=1, padx=5, sticky="w")
-        label.bind("<Button-1>", lambda e: print("Text clicked!"))
-app = sign_in()
+        label.bind("<Button-1>", lambda e: self.go_to_sign_in())
+    def go_to_sign_in(self):
+        self.destroy()   
+        open_sign_in()   
+
+app = log_in()
 app.mainloop()
