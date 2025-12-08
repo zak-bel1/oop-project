@@ -9,15 +9,6 @@ class sign_in(tk.Tk):
         else:
             self.password_entry.config(show="*") 
 
-    def toggle_delegate_section(self):
-        """Show/hide the delegate code field."""
-        if self.delegate_visible:
-            self.delegate_frame.grid_forget()
-            self.delegate_visible = False
-        else:
-            self.delegate_frame.grid(row=12, column=0, columnspan=2, padx=5, pady=5, sticky="n")
-            self.delegate_visible = True
-
     def check_if_full(self):
         if not self.firstname_entry.get():
             messagebox.showerror("Erreur", "Veuillez entrer votre prénom.")
@@ -46,11 +37,6 @@ class sign_in(tk.Tk):
         if self.genre.get() not in ["1", "2", "3"]:
             messagebox.showerror("Erreur", "Veuillez choisir une année.")
             return
-        if self.delegate_visible:
-            secret = self.delegate_code_entry.get()
-            if secret != "adminENSA":  
-                messagebox.showerror("Erreur", "Code délégué incorrect.")
-                return
         messagebox.showinfo("Succès", "Compte créé avec succès !")    
     def __init__(self):
         super().__init__()
@@ -156,34 +142,7 @@ class sign_in(tk.Tk):
         tk.Radiobutton(self, text="1ere année", value="1", variable=self.genre).grid(row=9, column=1, padx=10, pady=5, sticky="w")
         tk.Radiobutton(self, text="2emme année", value="2", variable=self.genre).grid(row=10, column=1, padx=10, pady=5, sticky="w")
         tk.Radiobutton(self, text="3emme année", value="3", variable=self.genre).grid(row=11, column=1, padx=10, pady=5, sticky="w")  
-        #code de delegue
-        self.delegate_visible = False
 
-        self.delegate_button = ctk.CTkButton(
-            self,
-            text="Cliquez si vous êtes délégué",
-            font=("Arial", 16),
-            width=200,
-            command=self.toggle_delegate_section)
-        #place de code de delegue
-        self.delegate_frame = tk.Frame(self)
-
-        self.delegate_label = tk.Label(
-            self.delegate_frame,
-            text="Code secret délégué:",
-            font=("Arial", 16)
-        )
-        self.delegate_label.grid(row=0, column=0, padx=10, pady=5, sticky="e")
-
-        self.delegate_code_entry = ttk.Entry(
-            self.delegate_frame,
-            style="blue_under.TEntry",
-            font=("Arial", 16),
-            width=20,
-            show="*"
-        )
-        self.delegate_code_entry.grid(row=0, column=1, padx=10, pady=5, sticky="w")    
-        self.delegate_button.grid(row=13, column=0, columnspan=2, pady=5)
         #BUTTON TO CREATE ACCOUNT       
         btn3 = ctk.CTkButton(
             self,
